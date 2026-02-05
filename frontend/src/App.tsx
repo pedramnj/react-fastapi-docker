@@ -17,12 +17,12 @@ const pipelineSteps = [
 ]
 
 const techStack = [
-  { icon: '⚛️', name: 'React' },
-  { icon: '⚡', name: 'FastAPI' },
-  { icon: '🐳', name: 'Docker' },
-  { icon: '🔄', name: 'GitHub Actions' },
-  { icon: '🐘', name: 'PostgreSQL' },
-  { icon: '🔒', name: 'Caddy' },
+  { name: 'React' },
+  { name: 'FastAPI' },
+  { name: 'Docker' },
+  { name: 'GitHub Actions' },
+  { name: 'PostgreSQL' },
+  { name: 'Caddy' },
 ]
 
 function App() {
@@ -50,113 +50,110 @@ function App() {
 
   return (
     <div className="app-wrapper">
-      {/* Animated Background */}
-      <div className="bg-gradient" />
-      <div className="floating-orbs">
-        <div className="orb orb-1" />
-        <div className="orb orb-2" />
-        <div className="orb orb-3" />
-      </div>
+      <div className="bg-mesh" />
 
       <div className="container">
         <header>
           <h1>DevOps Pipeline</h1>
-          <div className="subtitle">
-            <span className="tech-badge">React</span>
-            <span className="tech-badge">FastAPI</span>
-            <span className="tech-badge">Docker</span>
-            <span className="tech-badge">GitHub Actions</span>
-          </div>
+          <p className="subtitle">Full-Stack CI/CD Infrastructure Demo</p>
         </header>
 
         <main>
-          <section className="card">
-            <h2>
-              <span className="icon">🖥️</span>
-              Frontend
-            </h2>
+          <section className="glass-card">
+            <div className="card-header">
+              <span className="card-icon frontend-icon" />
+              <h2>Frontend</h2>
+            </div>
             <div className="card-content">
-              <div className="status success">
-                <span className="status-dot" />
-                Running
+              <div className="status-row">
+                <div className="status success">
+                  <span className="status-indicator" />
+                  <span>Running</span>
+                </div>
               </div>
-              <p className="card-description">
+              <p className="description">
                 React application with TypeScript, served via Nginx with automatic HTTPS
               </p>
             </div>
           </section>
 
-          <section className="card">
-            <h2>
-              <span className="icon">⚙️</span>
-              Backend API
-            </h2>
+          <section className="glass-card">
+            <div className="card-header">
+              <span className="card-icon backend-icon" />
+              <h2>Backend API</h2>
+            </div>
             <div className="card-content">
               {loading && (
-                <div className="status loading">
-                  <span className="status-dot" />
-                  Connecting...
+                <div className="status-row">
+                  <div className="status loading">
+                    <span className="status-indicator" />
+                    <span>Connecting...</span>
+                  </div>
                 </div>
               )}
               {error && (
                 <>
-                  <div className="status error">
-                    <span className="status-dot" />
-                    Disconnected
+                  <div className="status-row">
+                    <div className="status error">
+                      <span className="status-indicator" />
+                      <span>Disconnected</span>
+                    </div>
                   </div>
-                  <p className="error-text">{error}</p>
+                  <p className="error-message">{error}</p>
                 </>
               )}
               {apiInfo && (
                 <>
-                  <div className="status success">
-                    <span className="status-dot" />
-                    Connected
+                  <div className="status-row">
+                    <div className="status success">
+                      <span className="status-indicator" />
+                      <span>Connected</span>
+                    </div>
                   </div>
-                  <ul className="info-list">
-                    <li>
-                      <strong>Version</strong>
-                      <span>{apiInfo.version}</span>
-                    </li>
-                    <li>
-                      <strong>Environment</strong>
-                      <span>{apiInfo.environment}</span>
-                    </li>
-                    <li>
-                      <strong>Total Visits</strong>
-                      <span>{apiInfo.total_visits.toLocaleString()}</span>
-                    </li>
-                  </ul>
+                  <div className="info-grid">
+                    <div className="info-item">
+                      <span className="info-label">Version</span>
+                      <span className="info-value">{apiInfo.version}</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="info-label">Environment</span>
+                      <span className="info-value">{apiInfo.environment}</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="info-label">Total Visits</span>
+                      <span className="info-value">{apiInfo.total_visits.toLocaleString()}</span>
+                    </div>
+                  </div>
                 </>
               )}
             </div>
           </section>
 
-          <section className="card full-width">
-            <h2>
-              <span className="icon">🚀</span>
-              CI/CD Pipeline
-            </h2>
-            <ul className="pipeline-list">
-              {pipelineSteps.map((step) => (
-                <li key={step.num}>
-                  <span className="step-number">{step.num}</span>
-                  {step.name}
-                </li>
+          <section className="glass-card wide">
+            <div className="card-header">
+              <span className="card-icon pipeline-icon" />
+              <h2>CI/CD Pipeline</h2>
+            </div>
+            <div className="pipeline-steps">
+              {pipelineSteps.map((step, index) => (
+                <div key={step.num} className="pipeline-step">
+                  <div className="step-number">{step.num}</div>
+                  <span className="step-name">{step.name}</span>
+                  {index < pipelineSteps.length - 1 && <div className="step-connector" />}
+                </div>
               ))}
-            </ul>
+            </div>
           </section>
 
-          <section className="card full-width">
-            <h2>
-              <span className="icon">🛠️</span>
-              Tech Stack
-            </h2>
-            <div className="tech-stack">
+          <section className="glass-card wide">
+            <div className="card-header">
+              <span className="card-icon stack-icon" />
+              <h2>Tech Stack</h2>
+            </div>
+            <div className="tech-grid">
               {techStack.map((tech) => (
-                <div key={tech.name} className="tech-item">
-                  <span className="tech-icon">{tech.icon}</span>
-                  <span className="tech-name">{tech.name}</span>
+                <div key={tech.name} className="tech-chip">
+                  {tech.name}
                 </div>
               ))}
             </div>
@@ -164,31 +161,16 @@ function App() {
         </main>
 
         <footer>
-          <div className="footer-content">
-            <div className="footer-links">
-              <a
-                href="https://github.com/pedramnj/react-fastapi-docker"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-link"
-              >
-                <span>📦</span>
-                View on GitHub
-              </a>
-              <a
-                href="https://pedramcv.me"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-link"
-              >
-                <span>🌐</span>
-                Live Demo
-              </a>
-            </div>
-            <p className="footer-text">
-              Built by Pedram Nikjooy • DevOps Portfolio Project
-            </p>
-          </div>
+          <a
+            href="https://github.com/pedramnj/react-fastapi-docker"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            View on GitHub
+          </a>
+          <span className="footer-divider" />
+          <span className="footer-text">Pedram Nikjooy</span>
         </footer>
       </div>
     </div>
