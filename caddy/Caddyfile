@@ -1,0 +1,45 @@
+# Caddyfile - Automatic HTTPS with Let's Encrypt
+
+{
+    # Global options
+    email pedram@pedramcv.me
+    acme_ca https://acme-v02.api.letsencrypt.org/directory
+}
+
+# Main domain - staging
+pedramcv.me {
+    # Frontend - React app
+    reverse_proxy frontend:80
+
+    # API routes to backend
+    handle /api/* {
+        reverse_proxy backend:8000
+    }
+
+    # Health check endpoint
+    handle /health {
+        reverse_proxy backend:8000
+    }
+
+    # Enable compression
+    encode gzip
+
+    # Security headers
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        Referrer-Policy strict-origin-when-cross-origin
+        -Server
+    }
+
+    # Logging
+    log {
+        output stdout
+        format json
+    }
+}
+
+# www redirect
+www.pedramcv.me {
+    redir https://pedramcv.me{uri} permanent
+}

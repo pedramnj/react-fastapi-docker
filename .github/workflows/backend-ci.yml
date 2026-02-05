@@ -116,6 +116,14 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.STAGING_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Sync configuration files
+        env:
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+        run: |
+          scp docker-compose.staging.yml $STAGING_USER@$STAGING_HOST:/opt/devops/
+          scp -r caddy/ $STAGING_USER@$STAGING_HOST:/opt/devops/
+
       - name: Deploy to staging server
         env:
           STAGING_HOST: ${{ secrets.STAGING_HOST }}
@@ -128,11 +136,13 @@ jobs:
 
             export IMAGE_TAG=latest
             export GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}
-            docker compose -f docker-compose.staging.yml pull backend
-            docker compose -f docker-compose.staging.yml up -d backend
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
 
-            sleep 5
-            curl -f http://localhost:8000/health || exit 1
+            docker compose -f docker-compose.staging.yml pull backend
+            docker compose -f docker-compose.staging.yml up -d
+
+            sleep 10
+            curl -f https://pedramcv.me/health || curl -f http://localhost:8000/health || exit 1
 
             docker image prune -f
           ENDSSH

@@ -1,12 +1,12 @@
 services:
   caddy:
     image: caddy:2-alpine
-    restart: unless-stopped
+    restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/Caddyfile.production:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
@@ -17,7 +17,7 @@ services:
 
   frontend:
     image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-pedramnj}/devops-frontend:${IMAGE_TAG:-latest}
-    restart: unless-stopped
+    restart: always
     expose:
       - "80"
     depends_on:
@@ -27,13 +27,13 @@ services:
 
   backend:
     image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-pedramnj}/devops-backend:${IMAGE_TAG:-latest}
-    restart: unless-stopped
+    restart: always
     expose:
       - "8000"
     environment:
       - DEBUG=false
-      - CORS_ORIGINS=https://pedramcv.me,https://www.pedramcv.me,http://localhost
-      - DATABASE_URL=postgresql://devops:${DB_PASSWORD:-changeme}@postgres:5432/devops
+      - CORS_ORIGINS=https://app.pedramcv.me,https://www.app.pedramcv.me
+      - DATABASE_URL=postgresql://devops:${DB_PASSWORD}@postgres:5432/devops_prod
     depends_on:
       postgres:
         condition: service_healthy
@@ -42,16 +42,16 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    restart: unless-stopped
+    restart: always
     environment:
       - POSTGRES_USER=devops
-      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeme}
-      - POSTGRES_DB=devops
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=devops_prod
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U devops -d devops"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U devops -d devops_prod"]
+      interval: 10s
       timeout: 5s
       retries: 5
     networks:

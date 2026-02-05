@@ -5,6 +5,7 @@ interface ApiInfo {
   app: string
   version: string
   environment: string
+  total_visits: number
 }
 
 function App() {
@@ -65,6 +66,9 @@ function App() {
                 </li>
                 <li>
                   <strong>Environment:</strong> {apiInfo.environment}
+                </li>
+                <li>
+                  <strong>Total Visits:</strong> {apiInfo.total_visits}
                 </li>
               </ul>
             </>
