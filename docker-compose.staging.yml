@@ -1,0 +1,25 @@
+services:
+  frontend:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-pedramnj}/devops-frontend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER:-pedramnj}/devops-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=false
+      - CORS_ORIGINS=http://37.27.25.159,http://localhost
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
