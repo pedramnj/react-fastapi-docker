@@ -124,7 +124,7 @@ jobs:
 
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-            export IMAGE_TAG=${{ github.sha }}
+            export IMAGE_TAG=latest
             export GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}
             docker compose -f docker-compose.staging.yml pull frontend
             docker compose -f docker-compose.staging.yml up -d frontend
