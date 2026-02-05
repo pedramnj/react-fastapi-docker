@@ -4,28 +4,7 @@ A complete CI/CD pipeline demonstration featuring a React frontend and FastAPI b
 
 ## Architecture
 
-```
-                    GitHub Actions CI/CD
-                           |
-           +---------------+---------------+
-           |                               |
-     Frontend CI                     Backend CI
-           |                               |
-    +------+------+              +--------+--------+
-    |      |      |              |        |        |
-  Lint   Test   Build          Lint    Test    Build
-                  |                              |
-            Push to GHCR                  Push to GHCR
-                  |                              |
-                  +---------- Deploy -----------+
-                              |
-                    Staging Server (Hetzner)
-                              |
-              +---------------+---------------+
-              |                               |
-         Frontend:80                    Backend:8000
-         (Nginx)                        (Uvicorn)
-```
+![CI/CD Architecture](devops.png)
 
 ## Tech Stack
 
