@@ -21,7 +21,7 @@ describe('App', () => {
     ) as unknown as typeof fetch
 
     render(<App />)
-    expect(screen.getByText('Microservices CI/CD Demo')).toBeInTheDocument()
+    expect(screen.getByText('DevOps Pipeline')).toBeInTheDocument()
   })
 
   it('renders frontend status section', () => {
@@ -38,7 +38,7 @@ describe('App', () => {
     ) as unknown as typeof fetch
 
     render(<App />)
-    expect(screen.getByText('Frontend Status')).toBeInTheDocument()
+    expect(screen.getByText('Frontend')).toBeInTheDocument()
     expect(screen.getByText('Running')).toBeInTheDocument()
   })
 
@@ -57,7 +57,7 @@ describe('App', () => {
 
     render(<App />)
     expect(screen.getByText('CI/CD Pipeline')).toBeInTheDocument()
-    expect(screen.getByText('Lint and Type Check')).toBeInTheDocument()
+    expect(screen.getByText('Lint & Type Check')).toBeInTheDocument()
     expect(screen.getByText('Docker Build')).toBeInTheDocument()
   })
 })

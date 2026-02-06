@@ -18,7 +18,7 @@ def test_api_info(client):
     response = client.get("/api/info")
     assert response.status_code == 200
     data = response.json()
-    assert data["app"] == "Microservices CI/CD Demo"
+    assert data["app"] == "Microservices CI/CD Pipeline"
     assert data["version"] == "1.0.0"
     assert "environment" in data
     assert "total_visits" in data

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+type MonitoringTab = 'grafana' | 'prometheus'
+
 interface ApiInfo {
   app: string
   version: string
@@ -23,14 +25,19 @@ const techStack = [
   { name: 'GitHub Actions' },
   { name: 'PostgreSQL' },
   { name: 'Caddy' },
+  { name: 'Prometheus' },
+  { name: 'Grafana' },
 ]
 
 function App() {
   const [apiInfo, setApiInfo] = useState<ApiInfo | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [monitoringTab, setMonitoringTab] = useState<MonitoringTab>('grafana')
 
   const apiUrl = import.meta.env.VITE_API_URL || ''
+  const grafanaUrl = '/grafana/d/fastapi-backend/fastapi-backend?orgId=1&kiosk'
+  const prometheusUrl = '/prometheus/graph?g0.expr=rate(http_requests_total%5B5m%5D)&g0.tab=0&g0.range_input=1h'
 
   useEffect(() => {
     fetch(`${apiUrl}/api/info`)
@@ -55,7 +62,7 @@ function App() {
       <div className="container">
         <header>
           <h1>DevOps Pipeline</h1>
-          <p className="subtitle">Full-Stack CI/CD Infrastructure Demo</p>
+          <p className="subtitle">Full-Stack CI/CD Infrastructure</p>
         </header>
 
         <main>
@@ -156,6 +163,53 @@ function App() {
                   {tech.name}
                 </div>
               ))}
+            </div>
+          </section>
+
+          <section className="glass-card wide monitoring-section">
+            <div className="card-header">
+              <span className="card-icon monitoring-icon" />
+              <h2>Live Monitoring</h2>
+            </div>
+            <div className="monitoring-tabs">
+              <button
+                className={`tab-button ${monitoringTab === 'grafana' ? 'active' : ''}`}
+                onClick={() => setMonitoringTab('grafana')}
+              >
+                Grafana Dashboard
+              </button>
+              <button
+                className={`tab-button ${monitoringTab === 'prometheus' ? 'active' : ''}`}
+                onClick={() => setMonitoringTab('prometheus')}
+              >
+                Prometheus
+              </button>
+            </div>
+            <div className="monitoring-frame-container">
+              <iframe
+                src={monitoringTab === 'grafana' ? grafanaUrl : prometheusUrl}
+                title={monitoringTab === 'grafana' ? 'Grafana Dashboard' : 'Prometheus'}
+                className="monitoring-frame"
+                frameBorder="0"
+              />
+            </div>
+            <div className="monitoring-links">
+              <a
+                href="/grafana"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="monitoring-link"
+              >
+                Open Grafana
+              </a>
+              <a
+                href="/prometheus"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="monitoring-link"
+              >
+                Open Prometheus
+              </a>
             </div>
           </section>
         </main>

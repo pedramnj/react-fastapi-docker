@@ -1,7 +1,7 @@
 [project]
 name = "devops-backend"
 version = "1.0.0"
-description = "Backend API for Microservices CI/CD Demo"
+description = "Backend API for Microservices CI/CD Pipeline"
 requires-python = ">=3.11"
 
 [tool.ruff]

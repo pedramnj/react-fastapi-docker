@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -32,7 +33,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="DevOps Backend API",
-    description="Backend API for the Microservices CI/CD Demo",
+    description="Backend API for the Microservices CI/CD Pipeline",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -45,6 +46,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 
 class ItemCreate(BaseModel):
@@ -87,7 +90,7 @@ async def get_info(
     total_visits = db.query(Visit).count()
 
     return {
-        "app": "Microservices CI/CD Demo",
+        "app": "Microservices CI/CD Pipeline",
         "version": "1.0.0",
         "environment": os.getenv("DEBUG", "false").lower() == "true"
         and "debug"

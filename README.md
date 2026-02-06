@@ -1,6 +1,6 @@
-# Microservices CI/CD Demo
+# Microservices CI/CD Pipeline
 
-A complete CI/CD pipeline demonstration featuring a React frontend and FastAPI backend, containerized with Docker and deployed via GitHub Actions to a staging server.
+A production-ready CI/CD pipeline featuring a React frontend and FastAPI backend, containerized with Docker and deployed via GitHub Actions with HTTPS, monitoring, and infrastructure as code.
 
 ## Architecture
 
