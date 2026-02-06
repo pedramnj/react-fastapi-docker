@@ -92,9 +92,7 @@ async def get_info(
     return {
         "app": "Microservices CI/CD Pipeline",
         "version": "1.0.0",
-        "environment": os.getenv("DEBUG", "false").lower() == "true"
-        and "debug"
-        or "production",
+        "environment": os.getenv("DEBUG", "false").lower() == "true" and "debug" or "production",
         "total_visits": total_visits,
     }
 
