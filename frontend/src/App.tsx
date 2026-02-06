@@ -3,6 +3,7 @@ import './App.css'
 
 type MonitoringTab = 'grafana' | 'prometheus'
 
+
 interface ApiInfo {
   app: string
   version: string
