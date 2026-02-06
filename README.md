@@ -1,5 +1,8 @@
 # Microservices CI/CD Pipeline
 
+[![Frontend CI/CD](https://github.com/pedramnj/react-fastapi-docker/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/pedramnj/react-fastapi-docker/actions/workflows/frontend-ci.yml)
+[![Backend CI/CD](https://github.com/pedramnj/react-fastapi-docker/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/pedramnj/react-fastapi-docker/actions/workflows/backend-ci.yml)
+
 A production-ready CI/CD pipeline featuring a React frontend and FastAPI backend, containerized with Docker and deployed via GitHub Actions with HTTPS, monitoring, and infrastructure as code.
 
 ## Architecture
